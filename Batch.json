@@ -1,0 +1,601 @@
+[
+    {
+        "id": "470da9d26ccc3d1f",
+        "type": "subflow",
+        "name": "Batch",
+        "info": "",
+        "category": "Automation Service",
+        "in": [
+            {
+                "x": 40,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "4cea1b4868249f30"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 720,
+                "y": 540,
+                "wires": [
+                    {
+                        "id": "ed608aba11ca756e",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 710,
+                "y": 600,
+                "wires": [
+                    {
+                        "id": "ed608aba11ca756e",
+                        "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 820,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "4de27f98613f7ecc",
+                        "port": 0
+                    },
+                    {
+                        "id": "84e5aae07682e880",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Class",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Type",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "SubType",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-ninjo",
+            "type": "Batch",
+            "version": "0.0.1",
+            "author": "Frank Huxol <frank.huxol@ebp.de>",
+            "desc": "A node to trigger production of a Batch Favourite",
+            "keywords": "node-red, ninjo"
+        },
+        "color": "#FFAAAA",
+        "inputLabels": [
+            "Start Production"
+        ],
+        "outputLabels": [
+            "Production Completed",
+            "Warning Occurred",
+            "Error Occurred"
+        ],
+        "icon": "node-red/batch.svg",
+        "status": {
+            "x": 700,
+            "y": 700,
+            "wires": [
+                {
+                    "id": "88150b5c975131b6",
+                    "port": 0
+                },
+                {
+                    "id": "401cfa9bc810e347",
+                    "port": 0
+                },
+                {
+                    "id": "34cda573c083c526",
+                    "port": 0
+                },
+                {
+                    "id": "c72a9bcbfe27db36",
+                    "port": 0
+                },
+                {
+                    "id": "f19a7ac90c6965ba",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "575a5a98e79a9f91",
+        "type": "comment",
+        "z": "470da9d26ccc3d1f",
+        "g": "5a374a08004b8a29",
+        "name": "Part 2: Download the file",
+        "info": "",
+        "x": 210,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "a6c03b4f69c7df71",
+        "type": "comment",
+        "z": "470da9d26ccc3d1f",
+        "g": "40269bb809cdf40e",
+        "name": "Part 1: Ask Batch to start production. The response will contain a URL of the created image file",
+        "info": "",
+        "x": 430,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "f19a7ac90c6965ba",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "ce827a882b906287",
+        "name": "Update status",
+        "func": "return {\n    \"status\": { \"fill\": \"red\", \"shape\": \"dot\", \"text\": \"Failure\" }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c72a9bcbfe27db36",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "ce827a882b906287",
+        "name": "Update status",
+        "func": "return {\n    \"status\": { \"fill\": \"yellow\", \"shape\": \"dot\", \"text\": \"Finished - missing data\" }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "34cda573c083c526",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "ce827a882b906287",
+        "name": "Update status",
+        "func": "return {\n    \"status\": { \"fill\": \"green\", \"shape\": \"dot\", \"text\": \"Finished\" }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "401cfa9bc810e347",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "ce827a882b906287",
+        "name": "Update status",
+        "func": "return {\n    \"status\": { \"fill\": \"yellow\", \"shape\": \"ring\", \"text\": \"Downloading product: \" }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "88150b5c975131b6",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "ce827a882b906287",
+        "name": "Update status",
+        "func": "return {\n    \"status\": { \"fill\": \"yellow\", \"shape\": \"ring\", \"text\": \"Requesting Production: \" }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4de27f98613f7ecc",
+        "type": "catch",
+        "z": "470da9d26ccc3d1f",
+        "g": "405052f5175e416c",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 620,
+        "y": 340,
+        "wires": [
+            [
+                "f19a7ac90c6965ba"
+            ]
+        ]
+    },
+    {
+        "id": "4cea1b4868249f30",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "40269bb809cdf40e",
+        "name": "Initialize",
+        "func": "var referenceTime=''\nif (Number.isInteger(msg.payload)) {\n    referenceTime = msg.payload;\n}\nif (Number.isInteger(msg.payload.reference_time)) {\n    referenceTime = msg.payload.reference_time;\n}\nmsg.incomingPayload = msg.payload;\n\nmsg.payload = \"VERBOSE=1&class=\" + env.get('Class') + \"&type=\" + env.get('Type') + \"&subtype=\" + env.get('SubType') + \"&priority=2&timeout=300&block=1&download.products=1&download.logs=1\";\nif (referenceTime) {\n    msg.payload += \"&display.time=\" + referenceTime;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "be7be5211482de9d",
+                "88150b5c975131b6"
+            ]
+        ]
+    },
+    {
+        "id": "df173b06a98ed256",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "5a374a08004b8a29",
+        "name": "Define first file to retrieve",
+        "func": "msg.url = \"http://localhost:8082/NinJoWebRequestHandler/data/temp/\"+msg.files[0]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 440,
+        "wires": [
+            [
+                "33a8e62e4df2508d",
+                "401cfa9bc810e347"
+            ]
+        ]
+    },
+    {
+        "id": "f8d86ade2d3d7973",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "5a374a08004b8a29",
+        "name": "Extract files names",
+        "func": "const fileRegexp = /<GET:(.*)/g;\nconst fullLog = msg.payload;\n\nconst fileFinds = [...fullLog.matchAll(fileRegexp)];\n\nconst files = [];\nfor (let index = 0; index < fileFinds.length; index++) {\n    const element = fileFinds[index];\n    files.push(element[1]);\n}\n\nmsg.files = files;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 440,
+        "wires": [
+            [
+                "df173b06a98ed256"
+            ]
+        ]
+    },
+    {
+        "id": "84b317082f0dfcaf",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "g": "40269bb809cdf40e",
+        "name": "Extract result code",
+        "func": "const codeRegexp = /<CODE:(.*)/g;\nconst fullLog = msg.payload;\n\nconst codeFinds = [...fullLog.matchAll(codeRegexp)];\nconst code = codeFinds[0][1];\n\nmsg.errorCode = parseInt(code);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 200,
+        "wires": [
+            [
+                "84e5aae07682e880"
+            ]
+        ]
+    },
+    {
+        "id": "be7be5211482de9d",
+        "type": "http request",
+        "z": "470da9d26ccc3d1f",
+        "g": "40269bb809cdf40e",
+        "name": "Request Batch Production",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:8082/NinJoWebRequestHandler/batch/request",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Accept-Charset",
+                "valueType": "other",
+                "valueValue": "UTF8"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "content-type",
+                "valueType": "other",
+                "valueValue": "application/x-www-form-urlencoded"
+            }
+        ],
+        "x": 380,
+        "y": 200,
+        "wires": [
+            [
+                "84b317082f0dfcaf"
+            ]
+        ]
+    },
+    {
+        "id": "33a8e62e4df2508d",
+        "type": "http request",
+        "z": "470da9d26ccc3d1f",
+        "g": "5a374a08004b8a29",
+        "name": "download first file",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 630,
+        "y": 440,
+        "wires": [
+            [
+                "2fa23de771e1042e"
+            ]
+        ]
+    },
+    {
+        "id": "84e5aae07682e880",
+        "type": "switch",
+        "z": "470da9d26ccc3d1f",
+        "name": "errorCode negative?",
+        "property": "errorCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "f19a7ac90c6965ba"
+            ],
+            [
+                "f8d86ade2d3d7973"
+            ]
+        ]
+    },
+    {
+        "id": "ed608aba11ca756e",
+        "type": "switch",
+        "z": "470da9d26ccc3d1f",
+        "name": "errorCode zero?",
+        "property": "errorCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 470,
+        "y": 580,
+        "wires": [
+            [
+                "34cda573c083c526"
+            ],
+            [
+                "c72a9bcbfe27db36"
+            ]
+        ]
+    },
+    {
+        "id": "2fa23de771e1042e",
+        "type": "function",
+        "z": "470da9d26ccc3d1f",
+        "name": "reset payload",
+        "func": "msg.incomingPayload.image = msg.payload;\nmsg.payload = msg.incomingPayload;\n\ndelete msg.incomingPayload\ndelete msg.responseUrl\ndelete msg.url\ndelete msg.retry\ndelete msg.redirectList\ndelete msg.statusCode\ndelete msg.headers\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 580,
+        "wires": [
+            [
+                "ed608aba11ca756e"
+            ]
+        ]
+    },
+    {
+        "id": "06b8082adcad78ec",
+        "type": "comment",
+        "z": "470da9d26ccc3d1f",
+        "name": "HTTP Requests are send towards Web Request Handler. Communication consists of two parts",
+        "info": "",
+        "x": 370,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "ce827a882b906287",
+        "type": "group",
+        "z": "470da9d26ccc3d1f",
+        "name": "Node statii",
+        "style": {
+            "fill": "#dbcbe7",
+            "fill-opacity": "0.45",
+            "label": true
+        },
+        "nodes": [
+            "88150b5c975131b6",
+            "401cfa9bc810e347",
+            "34cda573c083c526",
+            "c72a9bcbfe27db36",
+            "f19a7ac90c6965ba"
+        ],
+        "x": 94,
+        "y": 659,
+        "w": 212,
+        "h": 242
+    },
+    {
+        "id": "5a374a08004b8a29",
+        "type": "group",
+        "z": "470da9d26ccc3d1f",
+        "name": "retrieve image file",
+        "style": {
+            "fill": "#e3f3d3",
+            "fill-opacity": "0.56",
+            "label": true
+        },
+        "nodes": [
+            "33a8e62e4df2508d",
+            "f8d86ade2d3d7973",
+            "df173b06a98ed256",
+            "575a5a98e79a9f91"
+        ],
+        "x": 74,
+        "y": 359,
+        "w": 672,
+        "h": 122
+    },
+    {
+        "id": "405052f5175e416c",
+        "type": "group",
+        "z": "470da9d26ccc3d1f",
+        "name": "error",
+        "style": {
+            "fill": "#ffbfbf",
+            "fill-opacity": "0.52",
+            "label": true
+        },
+        "nodes": [
+            "4de27f98613f7ecc"
+        ],
+        "x": 534,
+        "y": 299,
+        "w": 172,
+        "h": 82
+    },
+    {
+        "id": "40269bb809cdf40e",
+        "type": "group",
+        "z": "470da9d26ccc3d1f",
+        "name": "Request production",
+        "style": {
+            "fill": "#e3f3d3",
+            "fill-opacity": "0.53",
+            "label": true
+        },
+        "nodes": [
+            "be7be5211482de9d",
+            "84b317082f0dfcaf",
+            "4cea1b4868249f30",
+            "a6c03b4f69c7df71"
+        ],
+        "x": 74,
+        "y": 119,
+        "w": 702,
+        "h": 122
+    },
+    {
+        "id": "d4746baabd4520d0",
+        "type": "subflow:470da9d26ccc3d1f",
+        "z": "a1b226945087451b",
+        "name": "",
+        "env": [
+            {
+                "name": "Class",
+                "value": "KU41A",
+                "type": "str"
+            },
+            {
+                "name": "Type",
+                "value": "SAT",
+                "type": "str"
+            },
+            {
+                "name": "SubType",
+                "value": "RGB_Tag_HRV_Nacht_IR_Custom",
+                "type": "str"
+            }
+        ],
+        "x": 410,
+        "y": 100,
+        "wires": [
+            [
+                "5178fd48e4f5fed2",
+                "cfda21e705144525"
+            ],
+            [
+                "5178fd48e4f5fed2",
+                "744786f971b36f61"
+            ],
+            [
+                "5583da3dce074f97"
+            ]
+        ]
+    }
+]
