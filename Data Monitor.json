@@ -1,0 +1,510 @@
+[
+    {
+        "id": "572978d6120c6b9d",
+        "type": "subflow",
+        "name": "Data Monitor",
+        "info": "",
+        "category": "Automation Service",
+        "in": [
+            {
+                "x": 60,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "ea67b096235fa5a4"
+                    },
+                    {
+                        "id": "9994e1332c568904"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 760,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "0e350811da82ee8f",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 750,
+                "y": 380,
+                "wires": [
+                    {
+                        "id": "10e97c1893d7baa5",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 580,
+                "y": 780,
+                "wires": [
+                    {
+                        "id": "6903012f3e0233fb",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Query",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-question"
+                }
+            },
+            {
+                "name": "Timeout",
+                "type": "num",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-clock-o",
+                    "type": "spinner",
+                    "opts": {
+                        "min": 0
+                    }
+                }
+            },
+            {
+                "name": "Required Datasets",
+                "type": "num",
+                "value": "1",
+                "ui": {
+                    "icon": "font-awesome/fa-hashtag",
+                    "type": "spinner",
+                    "opts": {
+                        "min": 0
+                    }
+                }
+            },
+            {
+                "name": "Notify About Missing Data",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "icon": "font-awesome/fa-info",
+                    "type": "checkbox"
+                }
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-ninjo",
+            "type": "Data Monitor",
+            "version": "0.0.1",
+            "author": "Frank Huxol <frank.huxol@ebp.de>",
+            "desc": "A node to wait for data availability",
+            "keywords": "node-red, ninjo"
+        },
+        "color": "#C0DEED",
+        "inputLabels": [
+            "Start Query"
+        ],
+        "outputLabels": [
+            "Data Complete",
+            "Data Missing",
+            "Error Occurred"
+        ],
+        "icon": "font-awesome/fa-database",
+        "status": {
+            "x": 700,
+            "y": 560,
+            "wires": [
+                {
+                    "id": "0e09c51644e77e89",
+                    "port": 0
+                },
+                {
+                    "id": "87e2506f14d98b66",
+                    "port": 0
+                },
+                {
+                    "id": "9d8dc557d1f32d8e",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "8fe4fdf1cf264482",
+        "type": "group",
+        "z": "572978d6120c6b9d",
+        "name": "node statii",
+        "style": {
+            "fill": "#dbcbe7",
+            "fill-opacity": "0.72",
+            "label": true
+        },
+        "nodes": [
+            "0e09c51644e77e89",
+            "87e2506f14d98b66",
+            "9d8dc557d1f32d8e"
+        ],
+        "x": 194,
+        "y": 519,
+        "w": 212,
+        "h": 162
+    },
+    {
+        "id": "ae87c9903dacb478",
+        "type": "group",
+        "z": "572978d6120c6b9d",
+        "name": "Data Availability Request",
+        "style": {
+            "fill": "#d1d1d1",
+            "label": true,
+            "fill-opacity": "0.25"
+        },
+        "nodes": [
+            "e196a6b4adec06be",
+            "60fb7bea1033a5f6",
+            "0871d6ad2edc96f2"
+        ],
+        "x": 34,
+        "y": 99,
+        "w": 672,
+        "h": 82
+    },
+    {
+        "id": "c8449a3648df4773",
+        "type": "group",
+        "z": "572978d6120c6b9d",
+        "name": "loop",
+        "style": {
+            "fill": "#ffffbf",
+            "fill-opacity": "0.52",
+            "label": true
+        },
+        "nodes": [
+            "63c434c90c06ceae",
+            "8de7921557464947",
+            "4517858407d018dc"
+        ],
+        "x": 54,
+        "y": 239,
+        "w": 412,
+        "h": 222
+    },
+    {
+        "id": "9d8dc557d1f32d8e",
+        "type": "function",
+        "z": "572978d6120c6b9d",
+        "g": "8fe4fdf1cf264482",
+        "name": "Update status",
+        "func": "return {\n    \"status\": { \"fill\": \"green\", \"shape\": \"dot\", \"text\": \"Complete: \" + msg.payload.query }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "87e2506f14d98b66",
+        "type": "function",
+        "z": "572978d6120c6b9d",
+        "g": "8fe4fdf1cf264482",
+        "name": "Update status",
+        "func": "return {\n    \"status\": { \"fill\": \"yellow\", \"shape\": \"dot\", \"text\": \"Missing: \" + msg.payload.query }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0e09c51644e77e89",
+        "type": "function",
+        "z": "572978d6120c6b9d",
+        "g": "8fe4fdf1cf264482",
+        "name": "Update status",
+        "func": "return {\n    \"status\": { \"fill\": \"yellow\", \"shape\": \"ring\", \"text\": Math.floor((msg.queryEndTime - Date.now()) / 1000 ) + \" sec: \" + msg.query }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8de7921557464947",
+        "type": "delay",
+        "z": "572978d6120c6b9d",
+        "g": "c8449a3648df4773",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 420,
+        "wires": [
+            [
+                "0871d6ad2edc96f2"
+            ]
+        ]
+    },
+    {
+        "id": "63c434c90c06ceae",
+        "type": "function",
+        "z": "572978d6120c6b9d",
+        "g": "c8449a3648df4773",
+        "name": "Check future timeout",
+        "func": "if (msg.queryEndTime - (Date.now()) < 0) {\n    return [msg, null];\n} else \n{\n    return [null, msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "10e97c1893d7baa5"
+            ],
+            [
+                "8de7921557464947",
+                "0e09c51644e77e89"
+            ]
+        ],
+        "outputLabels": [
+            "timeout",
+            "still running"
+        ]
+    },
+    {
+        "id": "4517858407d018dc",
+        "type": "switch",
+        "z": "572978d6120c6b9d",
+        "g": "c8449a3648df4773",
+        "name": "",
+        "property": "availableDataAmount",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "Required Datasets",
+                "vt": "env"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "0e350811da82ee8f"
+            ],
+            [
+                "63c434c90c06ceae"
+            ]
+        ]
+    },
+    {
+        "id": "60fb7bea1033a5f6",
+        "type": "function",
+        "z": "572978d6120c6b9d",
+        "g": "ae87c9903dacb478",
+        "name": "Extract found datasets",
+        "func": "const datasetRegex = /<INFO:(.*)/g;\nconst fullLog = msg.payload;\n\nconst datasetFinds = [...fullLog.matchAll(datasetRegex)];\n\nmsg.availableDataAmount = parseInt(datasetFinds[0][1]);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 140,
+        "wires": [
+            [
+                "4517858407d018dc"
+            ]
+        ]
+    },
+    {
+        "id": "0871d6ad2edc96f2",
+        "type": "change",
+        "z": "572978d6120c6b9d",
+        "g": "ae87c9903dacb478",
+        "name": "Define HTTP POST body",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "'datamonitor.query='&msg.query",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "e196a6b4adec06be"
+            ]
+        ]
+    },
+    {
+        "id": "e196a6b4adec06be",
+        "type": "http request",
+        "z": "572978d6120c6b9d",
+        "g": "ae87c9903dacb478",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:8082/NinJoWebRequestHandler/data/monitor",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "content-type",
+                "valueType": "other",
+                "valueValue": "application/x-www-form-urlencoded"
+            }
+        ],
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "60fb7bea1033a5f6"
+            ]
+        ]
+    },
+    {
+        "id": "ea67b096235fa5a4",
+        "type": "function",
+        "z": "572978d6120c6b9d",
+        "name": "Initialize",
+        "func": "flow.monitorCounter++;\nmsg.queryEndTime = Date.now() + +env.get('Timeout') * 1000 * 60\nmsg.availableDataAmount = 0;\nmsg.query = env.get('Query');\nvar referenceTime = ''\nif (Number.isInteger(msg.payload)) {\n    referenceTime = msg.payload;\n}\nif (Number.isInteger(msg.payload.reference_time)) {\n    referenceTime = msg.payload.reference_time;\n}\nif(referenceTime) {\n    msg.query += \" ^ reference_time = \\\"\" + referenceTime + \"\\\"\"\n}\nmsg.incomingPayload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.monitorCounter = 0;",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 40,
+        "wires": [
+            [
+                "0871d6ad2edc96f2",
+                "0e09c51644e77e89"
+            ]
+        ]
+    },
+    {
+        "id": "6903012f3e0233fb",
+        "type": "catch",
+        "z": "572978d6120c6b9d",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 320,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "10e97c1893d7baa5",
+        "type": "function",
+        "z": "572978d6120c6b9d",
+        "name": "reset payload",
+        "func": "msg.incomingPayload.availableDataAmount = msg.availableDataAmount\nmsg.payload = msg.incomingPayload\nmsg.payload.query = msg.query\n\ndelete msg.incomingPayload\ndelete msg.availableDataAmount\ndelete msg.responseUrl\ndelete msg.url\ndelete msg.retry\ndelete msg.redirectList\ndelete msg.statusCode\ndelete msg.headers\ndelete msg.queryEndTime\ndelete msg.query\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "87e2506f14d98b66"
+            ]
+        ]
+    },
+    {
+        "id": "0e350811da82ee8f",
+        "type": "function",
+        "z": "572978d6120c6b9d",
+        "name": "reset payload",
+        "func": "msg.incomingPayload.availableDataAmount = msg.availableDataAmount\nmsg.payload = msg.incomingPayload\nmsg.payload.query = msg.query\n\ndelete msg.incomingPayload\ndelete msg.availableDataAmount\ndelete msg.responseUrl\ndelete msg.url\ndelete msg.retry\ndelete msg.redirectList\ndelete msg.statusCode\ndelete msg.headers\ndelete msg.queryEndTime\ndelete msg.query\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 280,
+        "wires": [
+            [
+                "9d8dc557d1f32d8e"
+            ]
+        ]
+    },
+    {
+        "id": "9994e1332c568904",
+        "type": "change",
+        "z": "572978d6120c6b9d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "monitorCounter",
+                "pt": "flow",
+                "to": "4",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    }
+]
