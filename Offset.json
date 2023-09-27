@@ -1,0 +1,225 @@
+[
+    {
+        "id": "6eda9b4b70edb405",
+        "type": "subflow",
+        "name": "Offset",
+        "info": "",
+        "category": "Automation Service",
+        "in": [
+            {
+                "x": 60,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "74e83b1194123cb9"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 480,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "74e83b1194123cb9",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Offset",
+                "type": "num",
+                "value": "0",
+                "ui": {
+                    "type": "spinner"
+                }
+            },
+            {
+                "name": "RoundMode",
+                "type": "str",
+                "value": "Up",
+                "ui": {
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "en-US": "Up"
+                                },
+                                "v": "Up"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "Down"
+                                },
+                                "v": "Down"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "None"
+                                },
+                                "v": "None"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "RoundUp",
+                "type": "str",
+                "value": "3600",
+                "ui": {
+                    "icon": "font-awesome/fa-arrow-up",
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "en-US": "5 minutes"
+                                },
+                                "v": "300"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "10 minutes"
+                                },
+                                "v": "600"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "15 minutes"
+                                },
+                                "v": "900"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "30 minutes"
+                                },
+                                "v": "1800"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "one hour"
+                                },
+                                "v": "3600"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "2 hours"
+                                },
+                                "v": "7200"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "3 hours"
+                                },
+                                "v": "10800"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "6 hours"
+                                },
+                                "v": "21600"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "12 hours"
+                                },
+                                "v": "43200"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "RoundDown",
+                "type": "str",
+                "value": "3600",
+                "ui": {
+                    "icon": "font-awesome/fa-arrow-down",
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "en-US": "5 minutes"
+                                },
+                                "v": "300"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "10 minutes"
+                                },
+                                "v": "600"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "15 minutes"
+                                },
+                                "v": "900"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "30 minutes"
+                                },
+                                "v": "1800"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "one hour"
+                                },
+                                "v": "3600"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "2 hours"
+                                },
+                                "v": "7200"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "3 hours"
+                                },
+                                "v": "10800"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "6 hours"
+                                },
+                                "v": "21600"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "12 hours"
+                                },
+                                "v": "43200"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "74e83b1194123cb9",
+        "type": "function",
+        "z": "6eda9b4b70edb405",
+        "name": "function 2",
+        "func": "// first apply offset\nif (Number.isInteger(msg.payload.reference_time)) {\n    msg.payload.reference_time = msg.payload.reference_time + +env.get('Offset') * 1000;\n} else {\n    if (Number.isInteger(msg.payload)) {\n    msg.payload = msg.payload + +env.get('Offset') * 1000;\n    }\n}\n\n// then apply rounding\nif(env.get('RoundMode') == \"Up\") {\n    const roundUp = +env.get('RoundUp');\n    if (Number.isInteger(msg.payload.reference_time)) {\n        msg.payload.reference_time = parseInt(msg.payload.reference_time / 1000 / roundUp + 1) * roundUp * 1000 ;\n    } else {\n        if (Number.isInteger(msg.payload)) {\n            msg.payload = parseInt(msg.payload / 1000 / roundUp + 1) * roundUp * 1000;\n        }\n    }\n}\nif (env.get('RoundMode') == \"Down\") {\n    const roundDown = +env.get('RoundDown');\n    if (Number.isInteger(msg.payload.reference_time)) {\n        msg.payload.reference_time = parseInt(msg.payload.reference_time / 1000 / roundDown) * roundDown * 1000;\n    } else {\n        if (Number.isInteger(msg.payload)) {\n            msg.payload = parseInt(msg.payload / 1000 / roundDown) * roundDown * 1000;\n        }\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    }
+]

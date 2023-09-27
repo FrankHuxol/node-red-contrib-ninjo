@@ -3,4 +3,4 @@ Node-RED plugin providing functionality to interact with NinJo components (http:
 
 Currently, the plugin contains a single Batch node. This node assumes, that the Web Request Handler is accessible at http://localhost:8082
 
-You can also import the Batch node and the Data Monitor node as a subflow
+The other nodes are currently just subflows and you can import them manually.

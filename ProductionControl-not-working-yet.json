@@ -1,0 +1,247 @@
+[
+    {
+        "id": "e2565585443667c5",
+        "type": "subflow",
+        "name": "Production Control",
+        "info": "",
+        "category": "Automation Service",
+        "in": [
+            {
+                "x": 60,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "1ea5e809c5d998f3"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 900,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "cc02fd0741ab5448",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 920,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "04a1b11dc5b1e12f",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 910,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "04a1b11dc5b1e12f",
+                        "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 900,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "04a1b11dc5b1e12f",
+                        "port": 2
+                    }
+                ]
+            },
+            {
+                "x": 890,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "3d162697b93719c7",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Timeout",
+                "type": "num",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-clock-o",
+                    "type": "spinner",
+                    "opts": {
+                        "min": 0
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#F3B567",
+        "inputLabels": [
+            "Start Production"
+        ],
+        "outputLabels": [
+            "Start Production",
+            "Production Completed",
+            "Warning Occurred",
+            "Error Occurred",
+            "Timed Out"
+        ],
+        "icon": "node-red/join.svg"
+    },
+    {
+        "id": "287a1cdb43644094",
+        "type": "join",
+        "z": "e2565585443667c5",
+        "name": "",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": "false",
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "x": 230,
+        "y": 140,
+        "wires": [
+            [
+                "67b4ff590b27b5a7"
+            ]
+        ]
+    },
+    {
+        "id": "cc02fd0741ab5448",
+        "type": "function",
+        "z": "e2565585443667c5",
+        "name": "initialize",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ea5e809c5d998f3",
+        "type": "switch",
+        "z": "e2565585443667c5",
+        "name": "first/subsequent calls?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "A",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "A",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 220,
+        "y": 40,
+        "wires": [
+            [
+                "cc02fd0741ab5448"
+            ],
+            [
+                "287a1cdb43644094"
+            ]
+        ]
+    },
+    {
+        "id": "67b4ff590b27b5a7",
+        "type": "function",
+        "z": "e2565585443667c5",
+        "name": "check, if all joined",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "04a1b11dc5b1e12f"
+            ]
+        ]
+    },
+    {
+        "id": "04a1b11dc5b1e12f",
+        "type": "function",
+        "z": "e2565585443667c5",
+        "name": "check overall result",
+        "func": "\nreturn msg;",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 140,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "fa1c5e62f0df3468",
+        "type": "inject",
+        "z": "e2565585443667c5",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 230,
+        "y": 340,
+        "wires": [
+            [
+                "3d162697b93719c7"
+            ]
+        ]
+    },
+    {
+        "id": "3d162697b93719c7",
+        "type": "function",
+        "z": "e2565585443667c5",
+        "name": "regular check for timeout",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    }
+]

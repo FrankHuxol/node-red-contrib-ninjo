@@ -1,0 +1,152 @@
+[
+    {
+        "id": "4cbd3c80f753fae1",
+        "type": "subflow",
+        "name": "Parameterization",
+        "info": "",
+        "category": "Automation Service",
+        "in": [
+            {
+                "x": 60,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "d576f03667c496dd"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 740,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "1159847cf25da658",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Mode",
+                "type": "str",
+                "value": "Single Parameter Lists",
+                "ui": {
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "en-US": "Single Parameter Lists"
+                                },
+                                "v": "Single Parameter Lists"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "Whole Parameterizations"
+                                },
+                                "v": "Whole Parameterizations"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Single Parameter Lists",
+                "type": "json",
+                "value": "[{\"model_0.GRID_ELEMENT.Element\":\"Bedeckungsgrad\",\"model_0.GRID_ELEMENT.Level\":800,\"model_0.GRID_ELEMENT.LevelType\":\"Druckfläche\",\"model_0.VIS_CONFIG\":\"Batch~Bw_Cloudcover800_grey\"},{\"model_0.GRID_ELEMENT.Element\":\"Bedeckungsgrad, tiefe Bewölkung\",\"model_0.GRID_ELEMENT.Level\":\"--\",\"model_0.GRID_ELEMENT.LevelType\":\"Boden- oder Wasseroberfläche\",\"model_0.VIS_CONFIG\":\"Batch~Bw_Cloudcover800_grey\"}]",
+                "ui": {
+                    "icon": "font-awesome/fa-th-list",
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "json",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Whole Parameterizations",
+                "type": "json",
+                "value": "[\"Grid~ICON-D2\",\"Grid~ICON-EU\"]",
+                "ui": {
+                    "icon": "font-awesome/fa-list-alt",
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "json",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DEB887",
+        "inputLabels": [
+            "Parameterize"
+        ],
+        "outputLabels": [
+            "Parameterized"
+        ],
+        "icon": "node-red/split.svg"
+    },
+    {
+        "id": "6f2ff76456c3d449",
+        "type": "split",
+        "z": "4cbd3c80f753fae1",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 390,
+        "y": 40,
+        "wires": [
+            [
+                "1159847cf25da658"
+            ]
+        ]
+    },
+    {
+        "id": "d576f03667c496dd",
+        "type": "function",
+        "z": "4cbd3c80f753fae1",
+        "name": "prepare split",
+        "func": "msg.incomingPayload = msg.payload;\nmsg.payload = env.get(env.get('Mode'))\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 40,
+        "wires": [
+            [
+                "6f2ff76456c3d449"
+            ]
+        ]
+    },
+    {
+        "id": "1159847cf25da658",
+        "type": "function",
+        "z": "4cbd3c80f753fae1",
+        "name": "clean up",
+        "func": "if (env.get('Mode') == 'Single Parameter Lists') {\n    msg.payload = {\n        ...msg.incomingPayload,\n        parameterizationList: msg.payload\n    }\n}\nif (env.get('Mode') == 'Whole Parameterizations') {\n    msg.payload = {\n        ...msg.incomingPayload,\n        parameterization: msg.payload\n    }\n}\n\n\n\ndelete msg.incomingPayload\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    }
+]

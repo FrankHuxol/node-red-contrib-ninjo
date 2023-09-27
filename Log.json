@@ -1,0 +1,102 @@
+[
+    {
+        "id": "b06a8aedd19bca0a",
+        "type": "subflow",
+        "name": "Log",
+        "info": "",
+        "category": "Automation Service",
+        "in": [
+            {
+                "x": 100,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "e171e3eed0d9869d"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "Filename",
+                "type": "str",
+                "value": "/data/logs/default.log"
+            },
+            {
+                "name": "Level",
+                "type": "str",
+                "value": "INFO",
+                "ui": {
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "en-US": "INFO"
+                                },
+                                "v": "INFO"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "WARN"
+                                },
+                                "v": "WARN"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "ERROR"
+                                },
+                                "v": "ERROR"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Message",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#DAC4B4",
+        "icon": "node-red/file-out.svg"
+    },
+    {
+        "id": "86a3683e86a99af7",
+        "type": "file",
+        "z": "b06a8aedd19bca0a",
+        "name": "",
+        "filename": "Filename",
+        "filenameType": "env",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 520,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e171e3eed0d9869d",
+        "type": "function",
+        "z": "b06a8aedd19bca0a",
+        "name": "Prepare log",
+        "func": "return {\n    payload: env.get('Level') + \" \" + new Date(msg.payload) + \": \" + env.get('Message')\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 60,
+        "wires": [
+            [
+                "86a3683e86a99af7"
+            ]
+        ]
+    }
+]
